@@ -1,4 +1,5 @@
 import json
+from utils.global_utils.display_menu import display_menu
 
 def main(): # CRUD operation names will go here as my own note
     pass
@@ -15,5 +16,5 @@ def view_summary(): # Read
 def edit_transaction(): # Update
     print("Edits selected transaction")
 
-def delete_transaction():
+def delete_transaction(): # Delete
     print("Deletes selected transaction")
