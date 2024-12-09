@@ -14,7 +14,7 @@
 ## About
  A simple personal finance app focused on helping me learn key development concepts like CRUD, file handling, and input validation. This project will help me practice data persistence, file I/O, and error handling, while also building a strong foundation for larger applications.
 
-## Features(MVP)
+## Features(Minimum Viable Product)
 - Add transactions for income and expenses.
 - View all transactions in a table format.
 - View a summary of total income, expenses, and current balance.
