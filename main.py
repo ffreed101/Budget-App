@@ -6,13 +6,27 @@ from utils.global_utils.display_menu import display_menu
 
 transactions_path = "C:/Users/ffree/OneDrive/Documents/GitHub/Budget-App/transactions.json" 
 
-with open(transactions_path, "r") as file:
-    transactions = json.load(file)
-    print("Save data found.")
+
+
+try:
+    with open(transactions_path, "x"):
+        transactions = {}
+        print("Save data not found. Creating new file...")
+    
+except FileExistsError:
+    try:
+        with open(transactions_path, "r") as file:
+            transactions = json.load(file)
+            print("Save data found.")
+    except json.JSONDecodeError as e:
+        print(f"No Data: {e}")
+        transactions = {}
 
 
 def main(): # CRUD operation names will go here as my own note
+
     while True:
+        
         menu_options = ("Add Transaction", "Display Transaction History", "View Summary", "Edit Transaction", "Delete Transaction", "Exit")
         display_menu("Menu", menu_options)
         menu_choice = getValidInput("Enter a choice", True, False, 1, len(menu_options))
@@ -36,6 +50,7 @@ def main(): # CRUD operation names will go here as my own note
 
 def add_transaction(): # Create
     # print("Adds Transaction.")
+    new_key = int(len(transactions))
     date = getDate()
     category = input("Enter expense type: ") # Might make a category selection menu
     note = input("Enter a note: ")
@@ -48,12 +63,12 @@ def add_transaction(): # Create
         "amount_spent": amount_spent
     }
     
-    transactions[info["note"]] = info
+    transactions.update({new_key: info})
     
     return info
 
 def view_transactions(): # Read
-    print("Displays all Transaction history")
+    pass
 
 def view_summary(): # Read
     print("Displays summary")
