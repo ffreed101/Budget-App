@@ -72,7 +72,7 @@ def getDate():
     if month in months_with_31_days:
         day = getValidInput("Enter a day", True, False, 1, 31)
     elif month in months_with_30_days:
-        day = getValidInput("Enter a day: ", True, False, 1, 30)
+        day = getValidInput("Enter a day", True, False, 1, 30)
     else:
         if year % 4 == 0:
             day = getValidInput("Enter a day", True, False, 1, 29)
