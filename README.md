@@ -75,3 +75,5 @@ Since this is a personal learning project, contributions aren’t required. Howe
    - This one was a challenge, but I found the best way to go about it in my case was to iterate over the dictionary, create a list of new values, and clear the old dictionary so you can update the old one with the refactored data. My use case was because I wanted to use dictionaries instead of arrays to practice using them, so I have to renumber all my dictionary keys in the right order, from 0 and up.
  - **Version Control/Git**
    - I learned a lot from having someone else clone my repo and try to open the app. Finding those verison control problems and solving them to make life easier for others is really important.
+ - **Project Structuring**
+   - Handling paths for data files and importing scripts is making sense to me. I feel like I am getting a pretty good handle on the good practices involving project structure.
