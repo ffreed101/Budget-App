@@ -24,7 +24,7 @@ except FileExistsError:
 def main(): # CRUD operation names will go here as my own note
     while True:
         
-        menu_options = ("Add Transaction", "Display Transaction History", "View Summary", "Edit Transaction", "Delete Transaction", "Exit")
+        menu_options = ("Add Transaction", "Display Transaction History", "View Spending Summary", "Edit Transaction", "Delete Transaction", "Exit")
         display_menu("Menu", menu_options)
         menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
         match menu_choice:
@@ -49,11 +49,12 @@ def main(): # CRUD operation names will go here as my own note
 def add_transaction(): # Create
     # print("Adds Transaction.")
     new_key = str(len(transactions))
+    print()
     date = get_date()
     category = input("Enter expense type: ") # Might make a category selection menu
     note = input("Enter a note: ")
     amount_spent = get_valid_input("Enter the amount spent", True, True)
-
+    print()
     info = {
         "note": note,
         "category": category,
@@ -66,6 +67,7 @@ def add_transaction(): # Create
     return info
 
 def view_transactions(): # Read
+    print()
     labels = ("Note", "Category", "Date", "Amount Spent")
     divider = "-"
     for i in labels:
@@ -77,18 +79,22 @@ def view_transactions(): # Read
         date = transactions[key]["date"]
         amount_spent = transactions[key]["amount_spent"]
         print(f"{note:^15}{category:^15}{date:^15}{amount_spent:^15}")
+    print()
 
 def view_summary(): # Read
     amount_spent = 0
     for key in transactions:
         amount_spent += transactions[key]["amount_spent"]
-    print(f"Total spent: {amount_spent}")
+    print(f"\nTotal spent: {amount_spent:.2f}\n")
 
 def edit_transaction(): # Update
+    print()
     selected_transaction_id = get_transaction_id(transactions)
     selected_transaction = get_transaction(selected_transaction_id)
+    print()
     display_menu("Edit Transaction", ("Edit Note", "Edit Category", "Edit Date", "Edit Amount Spent"))
     edit_choice = get_valid_input("Choose an Option", True, False, 1, 4)
+    print()
     match edit_choice:
         case 1:
             selected_transaction["note"] = input("Enter a note: ")
@@ -98,12 +104,13 @@ def edit_transaction(): # Update
             selected_transaction["date"] = get_date()
         case 4:
             selected_transaction["amount_spent"] = get_valid_input("Enter the amount spent", True, True)
+    print()
 
 
 def delete_transaction(): # Delete
+    print()
     selected_transaction_id = get_transaction_id(transactions)
     selected_transaction = get_transaction(selected_transaction_id)
-    print(selected_transaction)
     note = selected_transaction["note"]
     print(f"You are about to delete '{note}'. Would you like to continue?")
     choice = input("(Y/N): ").lower()
@@ -123,8 +130,9 @@ def delete_transaction(): # Delete
         new_key = str(i)  # Corrected typo
         renum_keys[new_key] = value
         i += 1
-    transactions.clear()  # Clear the existing transactions
-    transactions.update(renum_keys)  # Update it with the renumbered keys
+    transactions.clear()
+    transactions.update(renum_keys)
+    print("Transaction Deleted!\n")
 
 def get_transaction(transaction_id):
     return transactions[transaction_id]
@@ -135,7 +143,7 @@ def get_transaction_id(transactions):
         note = transactions[key]["note"]
         print(f"{i}. {note}")
         i += 1
-    transaction_id = str(get_valid_input("Enter the number of the desired transaction", True, False, 1, len(transactions)))
+    transaction_id = str(get_valid_input("Enter the number of the desired transaction", True, False, 1, len(transactions))-1)
     if transaction_id in transactions.keys():
         return transaction_id
     else:
@@ -180,17 +188,18 @@ def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, ma
                     isValid = True
 
                 except:
-                    print("Invalid input. Please enter a decimal number.")
+                    print("Invalid input. Enter a decimal number.")
 
             else:
-                print("Invalid input. Please enter a number.")
+                print("Invalid input. Enter a number.")
                 
             if min_number != None and max_number != None:
                 if user_input in range(min_number, max_number+1):
                     isValid = True
                         
                 else:
-                    print(f"Invalid input. Please enter a number from {min_number} to {max_number}.")
+                    if isValid == True:
+                        print(f"Invalid input. Enter a number from {min_number} to {max_number}.")
                     isValid = False
 
             
