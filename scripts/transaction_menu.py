@@ -4,7 +4,7 @@ from utils import display_menu
 
 # TODO: File sort all functions
 
-transactions_path = "transactions.json" 
+transactions_path = "data/transactions.json" 
 
 try:
     with open(transactions_path, "x"):
