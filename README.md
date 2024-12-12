@@ -57,9 +57,11 @@ Since this is a personal learning project, contributions aren’t required. Howe
 ## File Structure
  ```bash
  budget-app/ 
-     ├── transactions.json # Where all transactions are stored 
+     ├── transactions.json # Where all transactions are stored. Created on first startup.
      ├── main.py # Main Python script 
      ├── README.md # This readme file
+     ├── utils # Utility functions
+         ├── display_menu.py # Utility function I use for basic CLI menus
  ```
 ## Technologies
 - **Language**: Python 3
