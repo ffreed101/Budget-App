@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from utils.global_utils.display_menu import display_menu
 
-# TODO: work on output normalization for inputs and resolve error throwing when range is off
+# TODO: work on view_transactions() to display a list of all saved transactions
 
 transactions_path = "C:/Users/ffree/OneDrive/Documents/GitHub/Budget-App/transactions.json" 
 
@@ -68,7 +68,17 @@ def add_transaction(): # Create
     return info
 
 def view_transactions(): # Read
-    pass
+    labels = ("Note", "Category", "Date", "Amount Spent")
+    divider = "-"
+    for i in labels:
+        print(f"{i:^15}",end="")
+    print(f"\n{divider*60}")
+    for key in transactions:
+        note = transactions[key]["note"]
+        category = transactions[key]["category"]
+        date = transactions[key]["date"]
+        amount_spent = transactions[key]["amount_spent"]
+        print(f"{note:^15}{category:^15}{date:^15}{amount_spent:^15}")
 
 def view_summary(): # Read
     print("Displays summary")
