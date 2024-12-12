@@ -219,5 +219,3 @@ def transaction_menu(): # CRUD operation names will go here as my own note
                 break
             case _:
                 print("Invalid selection.")
-
-transaction_menu()
