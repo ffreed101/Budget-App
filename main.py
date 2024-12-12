@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from utils.global_utils.display_menu import display_menu
 
-# TODO: work on view_transactions() to display a list of all saved transactions
+# TODO: File sort all functions
 
 transactions_path = "C:/Users/ffree/OneDrive/Documents/GitHub/Budget-App/transactions.json" 
 
