@@ -31,13 +31,16 @@
 3. All data is saved to a file (`transactions.json`) so it persists between sessions.
 
 ## Installation
+### Requirements
+- Python
 1. **Clone the repo**:
    ```bash
    git clone https://github.com/ffreed101/budget-app.git
    cd budget-app
    ```
-2. Run the app:
+2. Set the command line to the app directory and run the app:
    ```bash
+   cd C:/../Budget-App
    python main.py
    ```
 
@@ -63,7 +66,9 @@ Since this is a personal learning project, contributions aren’t required. Howe
 - **Libraries**: 'json'
 
 ## Challenges and Lessons Learned
- - Using JSON for save data
+ - **Using JSON for save data**
    - I've never made a system with persisting data and I feel like I've made a substantial jump in my understanding of working with and parsing file data from this.
- - Modifying dictionary keys
+ - **Modifying dictionary keys**
    - This one was a challenge, but I found the best way to go about it in my case was to iterate over the dictionary, create a list of new values, and clear the old dictionary so you can update the old one with the refactored data. My use case was because I wanted to use dictionaries instead of arrays to practice using them, so I have to renumber all my dictionary keys in the right order, from 0 and up.
+ - **Version Control/Git**
+   - I learned a lot from having someone else clone my repo and try to open the app. Finding those verison control problems and solving them to make life easier for others is really important.
