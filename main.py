@@ -6,8 +6,6 @@ from utils.global_utils.display_menu import display_menu
 
 transactions_path = "C:/Users/ffree/OneDrive/Documents/GitHub/Budget-App/transactions.json" 
 
-
-
 try:
     with open(transactions_path, "x"):
         transactions = {}
@@ -24,12 +22,11 @@ except FileExistsError:
 
 
 def main(): # CRUD operation names will go here as my own note
-
     while True:
         
         menu_options = ("Add Transaction", "Display Transaction History", "View Summary", "Edit Transaction", "Delete Transaction", "Exit")
         display_menu("Menu", menu_options)
-        menu_choice = getValidInput("Enter a choice", True, False, 1, len(menu_options))
+        menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
         match menu_choice:
             case 1:
                 add_transaction()
@@ -41,6 +38,7 @@ def main(): # CRUD operation names will go here as my own note
                 edit_transaction()
             case 5:
                 delete_transaction()
+
             case 6:
                 with open(transactions_path, "w") as file:
                     json.dump(transactions, file, indent=4)
@@ -50,11 +48,11 @@ def main(): # CRUD operation names will go here as my own note
 
 def add_transaction(): # Create
     # print("Adds Transaction.")
-    new_key = int(len(transactions))
+    new_key = str(len(transactions))
     date = get_date()
     category = input("Enter expense type: ") # Might make a category selection menu
     note = input("Enter a note: ")
-    amount_spent = getValidInput("Enter the amount spent", True, True)
+    amount_spent = get_valid_input("Enter the amount spent", True, True)
 
     info = {
         "note": note,
@@ -81,28 +79,82 @@ def view_transactions(): # Read
         print(f"{note:^15}{category:^15}{date:^15}{amount_spent:^15}")
 
 def view_summary(): # Read
-    print("Displays summary")
+    amount_spent = 0
+    for key in transactions:
+        amount_spent += transactions[key]["amount_spent"]
+    print(f"Total spent: {amount_spent}")
 
 def edit_transaction(): # Update
-    print("Edits selected transaction")
+    selected_transaction_id = get_transaction_id(transactions)
+    selected_transaction = get_transaction(selected_transaction_id)
+    display_menu("Edit Transaction", ("Edit Note", "Edit Category", "Edit Date", "Edit Amount Spent"))
+    edit_choice = get_valid_input("Choose an Option", True, False, 1, 4)
+    match edit_choice:
+        case 1:
+            selected_transaction["note"] = input("Enter a note: ")
+        case 2:
+            selected_transaction["category"] = input("Enter expense type: ") # Might make a category selection menu
+        case 3:
+            selected_transaction["date"] = get_date()
+        case 4:
+            selected_transaction["amount_spent"] = get_valid_input("Enter the amount spent", True, True)
+
 
 def delete_transaction(): # Delete
-    print("Deletes selected transaction")
+    selected_transaction_id = get_transaction_id(transactions)
+    selected_transaction = get_transaction(selected_transaction_id)
+    print(selected_transaction)
+    note = selected_transaction["note"]
+    print(f"You are about to delete '{note}'. Would you like to continue?")
+    choice = input("(Y/N): ").lower()
+    while True:
+        match choice:
+            case "y":
+                transactions.pop(selected_transaction_id)
+                break
+            case "n":
+                break
+            case _:
+                print("Invalid input. Do you want to delete this item?")
+                choice = input("(Y/N): ").lower
+    renum_keys = {}
+    i = 0
+    for key, value in transactions.items():  # Fixed use of .items()
+        new_key = str(i)  # Corrected typo
+        renum_keys[new_key] = value
+        i += 1
+    transactions.clear()  # Clear the existing transactions
+    transactions.update(renum_keys)  # Update it with the renumbered keys
+
+def get_transaction(transaction_id):
+    return transactions[transaction_id]
+
+def get_transaction_id(transactions):
+    i = 1
+    for key in transactions:
+        note = transactions[key]["note"]
+        print(f"{i}. {note}")
+        i += 1
+    transaction_id = str(get_valid_input("Enter the number of the desired transaction", True, False, 1, len(transactions)))
+    if transaction_id in transactions.keys():
+        return transaction_id
+    else:
+        print(f"Transaction ID {transaction_id} doesn't exist.")
 
 def get_date():
-    year = getValidInput("Enter a year", True, False, 1, 9999)
-    month = getValidInput("Enter a month", True, False, 1, 12)
+    year = get_valid_input("Enter a year", True, False, 1, 9999)
+    month = get_valid_input("Enter a month", True, False, 1, 12)
     months_with_31_days = (1, 3, 5, 6, 7, 10, 12)
     months_with_30_days = (4, 8, 9, 11)
     if month in months_with_31_days:
-        day = getValidInput("Enter a day", True, False, 1, 31)
+        day = get_valid_input("Enter a day", True, False, 1, 31)
     elif month in months_with_30_days:
-        day = getValidInput("Enter a day", True, False, 1, 30)
+        day = get_valid_input("Enter a day", True, False, 1, 30)
     else:
         if year % 4 == 0:
-            day = getValidInput("Enter a day", True, False, 1, 29)
+            day = get_valid_input("Enter a day", True, False, 1, 29)
         else:
-            day = getValidInput("Enter a day", True, False, 1, 28)
+            day = get_valid_input("Enter a day", True, False, 1, 28)
     if len(str(month)) == 1:
         if len(str(day)) == 1:
             return f"0{month}-0{day}-{year}"
@@ -112,7 +164,7 @@ def get_date():
         return f"{month}-{day}-{year}"
     
 
-def getValidInput(prompt, is_number=False, is_float=False, min_number=None, max_number=None, length=None):
+def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, max_number=None, length=None):
     while True:
         user_input = input(f"{prompt}: ")
         isValid = False
