@@ -51,7 +51,7 @@ def main(): # CRUD operation names will go here as my own note
 def add_transaction(): # Create
     # print("Adds Transaction.")
     new_key = int(len(transactions))
-    date = getDate()
+    date = get_date()
     category = input("Enter expense type: ") # Might make a category selection menu
     note = input("Enter a note: ")
     amount_spent = getValidInput("Enter the amount spent", True, True)
@@ -89,7 +89,7 @@ def edit_transaction(): # Update
 def delete_transaction(): # Delete
     print("Deletes selected transaction")
 
-def getDate():
+def get_date():
     year = getValidInput("Enter a year", True, False, 1, 9999)
     month = getValidInput("Enter a month", True, False, 1, 12)
     months_with_31_days = (1, 3, 5, 6, 7, 10, 12)
