@@ -63,4 +63,7 @@ Since this is a personal learning project, contributions aren’t required. Howe
 - **Libraries**: 'json'
 
 ## Challenges and Lessons Learned
- **COMING SOON**
+ - Using JSON for save data
+   - I've never made a system with persisting data and I feel like I've made a substantial jump in my understanding of working with and parsing file data from this.
+ - Modifying dictionary keys
+   - This one was a challenge, but I found the best way to go about it in my case was to iterate over the dictionary, create a list of new values, and clear the old dictionary so you can update the old one with the refactored data. My use case was because I wanted to use dictionaries instead of arrays to practice using them, so I have to renumber all my dictionary keys in the right order, from 0 and up.
