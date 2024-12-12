@@ -103,8 +103,13 @@ def getDate():
             day = getValidInput("Enter a day", True, False, 1, 29)
         else:
             day = getValidInput("Enter a day", True, False, 1, 28)
-
-    return f"{month}-{day}-{year}"
+    if len(str(month)) == 1:
+        if len(str(day)) == 1:
+            return f"0{month}-0{day}-{year}"
+        else:
+            return f"0{month}-{day}-{year}"
+    else:
+        return f"{month}-{day}-{year}"
     
 
 def getValidInput(prompt, is_number=False, is_float=False, min_number=None, max_number=None, length=None):
