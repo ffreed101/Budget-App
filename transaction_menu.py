@@ -21,30 +21,7 @@ except FileExistsError:
         transactions = {}
 
 
-def main(): # CRUD operation names will go here as my own note
-    while True:
-        
-        menu_options = ("Add Transaction", "Display Transaction History", "View Spending Summary", "Edit Transaction", "Delete Transaction", "Exit")
-        display_menu("Menu", menu_options)
-        menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
-        match menu_choice:
-            case 1:
-                add_transaction()
-            case 2:
-                view_transactions()
-            case 3:
-                view_summary()
-            case 4:
-                edit_transaction()
-            case 5:
-                delete_transaction()
 
-            case 6:
-                with open(transactions_path, "w") as file:
-                    json.dump(transactions, file, indent=4)
-                break
-            case _:
-                print("Invalid selection.")
 
 def add_transaction(): # Create
     # print("Adds Transaction.")
@@ -89,35 +66,36 @@ def view_summary(): # Read
 
 def edit_transaction(): # Update
     print()
-    selected_transaction_id = get_transaction_id(transactions)
-    selected_transaction = get_transaction(selected_transaction_id)
+    selected_transaction = get_transaction(transactions)
+    info = selected_transaction["info"]
     print()
     display_menu("Edit Transaction", ("Edit Note", "Edit Category", "Edit Date", "Edit Amount Spent"))
     edit_choice = get_valid_input("Choose an Option", True, False, 1, 4)
     print()
     match edit_choice:
         case 1:
-            selected_transaction["note"] = input("Enter a note: ")
+            info["note"] = input("Enter a note: ")
         case 2:
-            selected_transaction["category"] = input("Enter expense type: ") # Might make a category selection menu
+            info["category"] = input("Enter expense type: ") # Might make a category selection menu
         case 3:
-            selected_transaction["date"] = get_date()
+            info["date"] = get_date()
         case 4:
-            selected_transaction["amount_spent"] = get_valid_input("Enter the amount spent", True, True)
+            info["amount_spent"] = get_valid_input("Enter the amount spent", True, True)
     print()
 
 
 def delete_transaction(): # Delete
     print()
-    selected_transaction_id = get_transaction_id(transactions)
-    selected_transaction = get_transaction(selected_transaction_id)
-    note = selected_transaction["note"]
+    selected_transaction = get_transaction(transactions)
+    info = selected_transaction["info"]
+    id_num = selected_transaction["id"]
+    note = info["note"]
     print(f"You are about to delete '{note}'. Would you like to continue?")
     choice = input("(Y/N): ").lower()
     while True:
         match choice:
             case "y":
-                transactions.pop(selected_transaction_id)
+                transactions.pop(id_num)
                 break
             case "n":
                 break
@@ -134,10 +112,7 @@ def delete_transaction(): # Delete
     transactions.update(renum_keys)
     print("Transaction Deleted!\n")
 
-def get_transaction(transaction_id):
-    return transactions[transaction_id]
-
-def get_transaction_id(transactions):
+def get_transaction(transactions):
     i = 1
     for key in transactions:
         note = transactions[key]["note"]
@@ -145,9 +120,13 @@ def get_transaction_id(transactions):
         i += 1
     transaction_id = str(get_valid_input("Enter the number of the desired transaction", True, False, 1, len(transactions))-1)
     if transaction_id in transactions.keys():
-        return transaction_id
+        return {
+            "info": transactions[transaction_id],
+            "id": transaction_id
+        }
     else:
         print(f"Transaction ID {transaction_id} doesn't exist.")
+
 
 def get_date():
     year = get_valid_input("Enter a year", True, False, 1, 9999)
@@ -216,4 +195,29 @@ def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, ma
 
     return user_input
 
-main()
+def transaction_menu(): # CRUD operation names will go here as my own note
+    while True:
+        
+        menu_options = ("Add Transaction", "Display Transaction History", "View Spending Summary", "Edit Transaction", "Delete Transaction", "Exit")
+        display_menu("Menu", menu_options)
+        menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
+        match menu_choice:
+            case 1:
+                add_transaction()
+            case 2:
+                view_transactions()
+            case 3:
+                view_summary()
+            case 4:
+                edit_transaction()
+            case 5:
+                delete_transaction()
+
+            case 6:
+                with open(transactions_path, "w") as file:
+                    json.dump(transactions, file, indent=4)
+                break
+            case _:
+                print("Invalid selection.")
+
+transaction_menu()
