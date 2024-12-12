@@ -27,7 +27,8 @@
    - **Add Transaction**: Enter category, description, and amount.
    - **View Transactions**: View a list of past transactions.
    - **View Summary**: See total income, expenses, and balance.
-   - **Edit or Delete**: Modify or delete existing transactions.
+   - **Edit Transactions**: Modify existing transactions.
+   - **Delete Transactions**: Delete existing transactions.
 3. All data is saved to a file (`transactions.json`) so it persists between sessions.
 
 ## Installation
