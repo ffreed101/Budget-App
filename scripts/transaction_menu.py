@@ -1,6 +1,6 @@
 import json
 from datetime import datetime
-from utils.display_menu import display_menu
+from utils import display_menu
 
 # TODO: File sort all functions
 
