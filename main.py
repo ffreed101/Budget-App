@@ -4,7 +4,7 @@ from utils.display_menu import display_menu
 
 # TODO: File sort all functions
 
-transactions_path = "C:/Users/ffree/OneDrive/Documents/GitHub/Budget-App/transactions.json" 
+transactions_path = "transactions.json" 
 
 try:
     with open(transactions_path, "x"):
