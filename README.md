@@ -14,12 +14,21 @@
 ## About
  A simple personal finance app focused on helping me learn key development concepts like CRUD, file handling, and input validation. This project will help me practice data persistence, file I/O, and error handling, while also building a strong foundation for larger applications.
 
-## Features(Minimum Viable Product)
-- Add transactions for income and expenses.
-- View all transactions in a table format.
-- View a summary of total income, expenses, and current balance.
-- Edit or delete transactions.
-- Data is stored in a **JSON** file for persistence.
+## Features
+- Starting work on profiles to help track financial data.
+  - Track Fixed Monthly Expenses
+  - Allow user to add to regular variable expenses to track a monthly average
+  - Set your own spending/saving rate
+  - Separate spending and saving money after bills
+  - Use transactions to collect data on spending
+  - Make future projections based on bills, average spending and saving,d
+
+- Minimum Viable Product
+  - Add transactions for income and expenses.
+  - View all transactions in a table format.
+  - View a summary of total income, expenses, and current balance.
+  - Edit or delete transactions.
+  - Data is stored in a **JSON** file for persistence.
 
 ## How It Works
 1. The user is presented with a simple menu.
