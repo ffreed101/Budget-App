@@ -27,10 +27,8 @@ try:
 except (json.JSONDecodeError, FileNotFoundError) as e:
     print(f"File Error: {e}. Creating new save file...")
     transactions = {}
-    
 
-
-
+# Menu Funcs 
 
 def add_transaction(): # Create
     # print("Adds Transaction.")
@@ -39,13 +37,13 @@ def add_transaction(): # Create
     date = get_date()
     category = input("Enter expense type: ") # Might make a category selection menu
     note = input("Enter a note: ")
-    amount_spent = get_valid_input("Enter the amount spent", True, True)
+    amount = get_valid_input("Enter the amount", True, True)
     print()
     info = {
         "note": note,
         "category": category,
         "date": date,
-        "amount_spent": amount_spent
+        "amount": amount
     }
     
     transactions.update({new_key: info})
@@ -54,7 +52,7 @@ def add_transaction(): # Create
 
 def view_transactions(): # Read
     print()
-    labels = ("Note", "Category", "Date", "Amount Spent")
+    labels = ("Note", "Category", "Date", "Amount")
     divider = "-"
     for i in labels:
         print(f"{i:^15}",end="")
@@ -63,22 +61,22 @@ def view_transactions(): # Read
         note = transactions[key]["note"]
         category = transactions[key]["category"]
         date = transactions[key]["date"]
-        amount_spent = transactions[key]["amount_spent"]
-        print(f"{note:^15}{category:^15}{date:^15}{amount_spent:^15}")
+        amount = transactions[key]["amount"]
+        print(f"{note:^15}{category:^15}{date:^15}{amount:^15}")
     print()
 
 def view_summary(): # Read
-    amount_spent = 0
+    amount = 0
     for key in transactions:
-        amount_spent += transactions[key]["amount_spent"]
-    print(f"\nTotal spent: {amount_spent:.2f}\n")
+        amount += transactions[key]["amount"]
+    print(f"\nBalance: {amount:.2f}\n")
 
 def edit_transaction(): # Update
     print()
     selected_transaction = get_transaction(transactions)
     info = selected_transaction["info"]
     print()
-    display_menu("Edit Transaction", ("Edit Note", "Edit Category", "Edit Date", "Edit Amount Spent"))
+    display_menu("Edit Transaction", ("Edit Note", "Edit Category", "Edit Date", "Edit Amount"))
     edit_choice = get_valid_input("Choose an Option", True, False, 1, 4)
     print()
     match edit_choice:
@@ -89,9 +87,8 @@ def edit_transaction(): # Update
         case 3:
             info["date"] = get_date()
         case 4:
-            info["amount_spent"] = get_valid_input("Enter the amount spent", True, True)
+            info["amount"] = get_valid_input("Enter the amount", True, True)
     print()
-
 
 def delete_transaction(): # Delete
     print()
@@ -121,6 +118,8 @@ def delete_transaction(): # Delete
     transactions.update(renum_keys)
     print("Transaction Deleted!\n")
 
+# Input handling funcs
+
 def get_transaction(transactions):
     i = 1
     for key in transactions:
@@ -135,7 +134,6 @@ def get_transaction(transactions):
         }
     else:
         print(f"Transaction ID {transaction_id} doesn't exist.")
-
 
 def get_date():
     year = get_valid_input("Enter a year", True, False, 1, 9999)
@@ -158,7 +156,6 @@ def get_date():
             return f"0{month}-{day}-{year}"
     else:
         return f"{month}-{day}-{year}"
-    
 
 def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, max_number=None, length=None):
     while True:
@@ -190,7 +187,6 @@ def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, ma
                         print(f"Invalid input. Enter a number from {min_number} to {max_number}.")
                     isValid = False
 
-            
         else:
             if length != None:
                 if len(user_input) == length:
@@ -204,6 +200,8 @@ def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, ma
 
     return user_input
 
+# Main func
+
 def transaction_menu(): # CRUD operation names will go here as my own note
     while True:
         
@@ -211,23 +209,32 @@ def transaction_menu(): # CRUD operation names will go here as my own note
         display_menu("Menu", menu_options)
         menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
         match menu_choice:
+
             case 1:
                 add_transaction()
+
             case 2:
                 view_transactions()
+
             case 3:
                 view_summary()
+
             case 4:
                 if transactions != {}:
                     edit_transaction()
                 else:
-                    print("No transactions to edit. ")
+                    print("No transactions to edit.")
+
             case 5:
-                delete_transaction()
+                if transactions != {}:
+                    delete_transaction()
+                else:
+                    print("No transactions to delete.")
 
             case 6:
                 with open(transactions_path, "w") as file:
                     json.dump(transactions, file, indent=4)
                 break
+
             case _:
                 print("Invalid selection.")
