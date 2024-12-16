@@ -218,7 +218,10 @@ def transaction_menu(): # CRUD operation names will go here as my own note
             case 3:
                 view_summary()
             case 4:
-                edit_transaction()
+                if transactions != {}:
+                    edit_transaction()
+                else:
+                    print("No transactions to edit. ")
             case 5:
                 delete_transaction()
 
