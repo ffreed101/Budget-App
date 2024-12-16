@@ -1,24 +1,33 @@
 import json
+import sys
+import os
 from datetime import datetime
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir) # Adds parent folder to module import paths
+
 from utils import display_menu
 
-# TODO: File sort all functions
+data_dir = os.path.join(parent_dir, 'data')
+os.makedirs(data_dir, exist_ok=True)
 
-transactions_path = "data/transactions.json" 
+transactions_path = os.path.join(data_dir, 'transactions.json') 
 
 try:
-    with open(transactions_path, "x"):
-        transactions = {}
-        print("Save data not found. Creating new file...")
-    
-except FileExistsError:
-    try:
+    if not os.path.exists(transactions_path):
+        with open(transactions_path, "w") as file:
+            json.dump({}, file)
+            transactions = {}
+            print("Save data not found. Creating new save file...")
+    else:
         with open(transactions_path, "r") as file:
             transactions = json.load(file)
             print("Save data found.")
-    except json.JSONDecodeError as e:
-        print(f"No Data: {e}")
-        transactions = {}
+except (json.JSONDecodeError, FileNotFoundError) as e:
+    print(f"File Error: {e}. Creating new save file...")
+    transactions = {}
+    
 
 
 
