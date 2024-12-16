@@ -35,7 +35,7 @@ def add_transaction(): # Create
     new_key = str(len(transactions))
     print()
     date = get_date()
-    category = input("Enter expense type: ") # Might make a category selection menu
+    category = get_category() # Might make a category selection menu
     note = input("Enter a note: ")
     amount = get_valid_input("Enter the amount", True, True)
     print()
@@ -83,7 +83,7 @@ def edit_transaction(): # Update
         case 1:
             info["note"] = input("Enter a note: ")
         case 2:
-            info["category"] = input("Enter expense type: ") # Might make a category selection menu
+            info["category"] = get_category() # Might make a category selection menu
         case 3:
             info["date"] = get_date()
         case 4:
@@ -199,6 +199,13 @@ def get_valid_input(prompt, is_number=False, is_float=False, min_number=None, ma
             print("Please Try again.")
 
     return user_input
+
+def get_category():
+    categories = ("Income", "Food", "Gas", "Recreation", "Gift", "Personal", "Misc")
+    for i in categories:
+        print(f"{categories.index(i)+1}. {i}")
+    choice = get_valid_input("Select a category", True, False, 1, len(categories))
+    return categories[choice - 1]
 
 # Main func
 
