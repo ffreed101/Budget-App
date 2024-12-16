@@ -14,7 +14,4 @@ def main_menu():
     # Exit
     display_menu("Main Menu", ("View Data", "Transactions", "Profiles", "Exit"))
 
-main_menu()
-
-
 
