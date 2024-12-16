@@ -6,7 +6,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir) # Adds parent folder to module import paths
 
-from utils import display_menu, get_valid_input
+from utils.display_menu import display_menu
+from utils.get_valid_input import get_valid_input
 
 data_dir = os.path.join(parent_dir, 'data')
 os.makedirs(data_dir, exist_ok=True)
@@ -168,7 +169,7 @@ def get_category():
 def transaction_menu(): # CRUD operation names will go here as my own note
     while True:
         
-        menu_options = ("Add Transaction", "Display Transaction History", "View Spending Summary", "Edit Transaction", "Delete Transaction", "Exit")
+        menu_options = ("Add Transaction", "Display Transaction History", "View Spending Summary", "Edit Transaction", "Delete Transaction", "Back")
         display_menu("Menu", menu_options)
         menu_choice = get_valid_input("Enter a choice", True, False, 1, len(menu_options))
         match menu_choice:
