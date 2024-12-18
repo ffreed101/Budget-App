@@ -9,7 +9,7 @@
 from utils.get_valid_input import get_valid_input
 from utils.display_menu import display_menu
 from scripts.transaction_menu import transaction_menu
-from profile_menu import profile_menu
+from scripts.profile_menu import profile_menu
 
 def main_menu():
     # View Data
