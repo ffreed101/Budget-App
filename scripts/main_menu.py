@@ -16,7 +16,7 @@ def main_menu():
     # Profile
     # Exit
     while True:
-        display_menu("Main Menu", ("View Data", "Transactions", "Profiles", "Exit"))
+        display_menu("Main Menu", ("View Data", "Transactions", "Profile", "Exit"))
         menu_choice = get_valid_input("Enter a choice", True, False, 1, 4)
         match menu_choice:
             case 1:
