@@ -1,0 +1,6 @@
+from utils.display_menu import display_menu
+
+
+def profile_menu():
+    while True:
+        display_menu("Profile Menu", ("Create New Profile", "View Profile", "Edit Profile", "Back"))
